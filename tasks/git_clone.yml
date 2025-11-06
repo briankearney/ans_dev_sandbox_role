@@ -1,0 +1,39 @@
+---
+# creates temporary files and directories (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/tempfile_module.html)
+- name: Create Temporary Directory
+  ansible.builtin.tempfile:
+    state: directory
+  register: temp_dir_results
+
+# clone git repository using ssh (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html)
+- name: Clone GitHub Repository
+  ansible.builtin.git:
+    repo: git@github.aetna.com:mcindi/ans_dev_sandbox_role.git
+    dest: "{{ temp_dir_results.path }}/"
+    key_file: "{{ lookup('env', 'SANDBOX_GITHUB_SSH_KEY') }}"
+    version: main
+  environment:
+    GIT_TERMINAL_PROMPT: 0 # reports "terminal prompts disabled" on missing password
+    GIT_ASKPASS: /bin/true # for git before version 2.3.0, reports "Authentication failed" on missing password
+  register: git_clone_results
+
+# Recursively find all files in the cloned directory (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/find_module.html)
+- name: List Cloned Files
+  ansible.builtin.find:
+    paths: "{{ temp_dir_results.path }}"
+    recurse: true
+  register: find_results
+
+# Debug Find Results (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html)
+- name: Debug Files Found
+  debug:
+    var: find_results
+
+# - name: Example download of a single file
+#   ansible.builtin.get_url:
+#     url: https://github.aetna.com/raw/9298520/dpman/DEV/README.md
+#     dest: "{{ temp_dir_results.path }}/README.md"
+#     mode: '0400'
+#     force: yes
+#   register: get_file_results
+...

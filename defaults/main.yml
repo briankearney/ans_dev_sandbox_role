@@ -1,0 +1,13 @@
+---
+# sample plain text variable (https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#simple-variables)
+some_username: UserName
+
+# sample vault protected variable (https://docs.ansible.com/ansible/latest/vault_guide/vault_encrypting_content.html#encrypting-individual-variables-with-ansible-vault)
+some_password: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  39623765303836663961306533383933386432353630653465663063643738636562646464626162
+  3161646464666436303631666431373261643931346364660a333636633264613433353966626463
+  33373163333865346333346135643363366630383931656365626130633333626133636666656130
+  6331363237336361380a633737313534623632656631386263633939326539663861393430323332
+  3964
+...
