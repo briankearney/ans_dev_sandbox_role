@@ -1,6 +1,6 @@
 ---
 # sample plain text variable (https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#simple-variables)
-some_username: UserName
+some_username: {{ some_username | default('UserName') }}
 
 # sample vault protected variable (https://docs.ansible.com/ansible/latest/vault_guide/vault_encrypting_content.html#encrypting-individual-variables-with-ansible-vault)
 some_password: !vault |
