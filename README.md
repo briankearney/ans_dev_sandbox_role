@@ -1,6 +1,6 @@
 # Ansible Role: ans_dev_sandbox_role
 
-Demonstrate A Separately Versioned ANsible Role
+Demonstrate A Separately Versioned Ansible Role
 
 ## Requirements
 
