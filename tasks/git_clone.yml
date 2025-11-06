@@ -8,7 +8,7 @@
 # clone git repository using ssh (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html)
 - name: Clone GitHub Repository
   ansible.builtin.git:
-    repo: git@github.aetna.com:mcindi/ans_dev_sandbox_role.git
+    repo: git@github.com:briankearney/ans_dev_sandbox_role
     dest: "{{ temp_dir_results.path }}/"
     key_file: "{{ lookup('env', 'SANDBOX_GITHUB_SSH_KEY') }}"
     version: main
