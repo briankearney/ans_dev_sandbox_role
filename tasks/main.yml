@@ -1,5 +1,6 @@
 ---
 # tasks performed by default when this role is included (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_tasks_module.html)
-- ansible.builtin.include_tasks:
-  file: git_clone.yml
+- name: Include Clone Task
+  ansible.builtin.include_tasks:
+    file: git_clone.yml
 ...

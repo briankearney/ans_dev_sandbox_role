@@ -13,7 +13,7 @@
     key_file: "{{ lookup('env', 'SANDBOX_GITHUB_SSH_KEY') }}"
     version: main
   environment:
-    GIT_TERMINAL_PROMPT: 0 # reports "terminal prompts disabled" on missing password
+    GIT_TERMINAL_PROMPT: "false" # reports "terminal prompts disabled" on missing password
     GIT_ASKPASS: /bin/true # for git before version 2.3.0, reports "Authentication failed" on missing password
   register: git_clone_results
 
@@ -26,7 +26,7 @@
 
 # Debug Find Results (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html)
 - name: Debug Files Found
-  debug:
+  ansible.builtin.debug:
     var: find_results
 
 # - name: Example download of a single file

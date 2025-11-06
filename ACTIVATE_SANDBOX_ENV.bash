@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 deactivate
-export PYTHON_VENV=~/Documents/Python/ansible &&\
+export PYTHON_VENV=~/Documents/Python/py313_ans219 &&\
 export ROLE_PATH=~/Documents/GitHub/ans_dev_sandbox_role &&\
  source $PYTHON_VENV/bin/activate &&\
  cd $ROLE_PATH &&\
