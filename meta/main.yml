@@ -1,0 +1,38 @@
+---
+galaxy_info:
+  author: "Brian Kearney"
+  description: "Ansible role providing a development sandbox and demo tasks for testing/CI."
+  company: "briankearney"
+  license: "MIT"
+  min_ansible_version: "2.9"
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+        - 9
+    - name: Fedora
+      versions:
+        - 38
+        - 39
+        - 40
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+        - bookworm
+    - name: GenericLinux
+      versions:
+        - all
+  galaxy_tags:
+    - "ansible"
+    - "sandbox"
+    - "development"
+    - "ci"
+    - "demo"
+dependencies: []
+...
