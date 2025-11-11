@@ -17,17 +17,17 @@
     GIT_ASKPASS: /bin/true # for git before version 2.3.0, reports "Authentication failed" on missing password
   register: git_clone_results
 
-# Recursively find all files in the cloned directory (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/find_module.html)
+# recursively find all files in the cloned directory (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/find_module.html)
 - name: List Cloned Files
   ansible.builtin.find:
     paths: "{{ temp_dir_results.path }}"
     recurse: true
   register: find_results
 
-# Debug Find Results (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html)
+# display the fully qualified file names in the cloned directory (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html)
 - name: Debug Files Found
   ansible.builtin.debug:
-    var: find_results
+    msg: "{{ find_results.files | map(attribute='path') | list }}"
 
 # - name: Example download of a single file
 #   ansible.builtin.get_url:
