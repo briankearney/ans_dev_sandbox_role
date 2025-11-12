@@ -8,9 +8,8 @@
 # clone git repository using ssh (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html)
 - name: Clone GitHub Repository
   ansible.builtin.git:
-    repo: git@github.com:briankearney/ans_dev_sandbox_role
+    repo: https://github.com/briankearney/ans_dev_sandbox_role
     dest: "{{ temp_dir_results.path }}/"
-    key_file: "{{ lookup('env', 'SANDBOX_GITHUB_SSH_KEY') }}"
     version: main
   environment:
     GIT_TERMINAL_PROMPT: "false" # reports "terminal prompts disabled" on missing password
