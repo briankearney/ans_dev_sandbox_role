@@ -1,38 +1,48 @@
 ---
-# creates temporary files and directories (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/tempfile_module.html)
+# Create temporary files and directories
+# Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/tempfile_module.html
 - name: Create Temporary Directory
   ansible.builtin.tempfile:
     state: directory
+    suffix: _ansible_sandbox
   register: temp_dir_results
 
-# clone git repository using ssh (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html)
+# Clone git repository using HTTPS
+# Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html
 - name: Clone GitHub Repository
   ansible.builtin.git:
-    repo: https://github.com/briankearney/ans_dev_sandbox_role
+    repo: "{{ git_repo_url }}"
     dest: "{{ temp_dir_results.path }}/"
-    version: main
+    version: "{{ git_repo_version }}"
   environment:
-    GIT_TERMINAL_PROMPT: "false" # reports "terminal prompts disabled" on missing password
-    GIT_ASKPASS: /bin/true # for git before version 2.3.0, reports "Authentication failed" on missing password
+    GIT_TERMINAL_PROMPT: "false"
+    GIT_ASKPASS: /bin/true
   register: git_clone_results
+  failed_when: git_clone_results.failed
+  changed_when: git_clone_results.changed
 
-# recursively find all files in the cloned directory (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/find_module.html)
+# Recursively find all files in the cloned directory
+# Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/find_module.html
 - name: List Cloned Files
   ansible.builtin.find:
     paths: "{{ temp_dir_results.path }}"
     recurse: true
   register: find_results
+  when: not git_clone_results.failed
 
-# display the fully qualified file names in the cloned directory (https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html)
-- name: Debug Files Found
+# Display the fully qualified file names in the cloned directory
+# Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+- name: Display Files Found in Repository
   ansible.builtin.debug:
-    msg: "{{ find_results.files | map(attribute='path') | list }}"
+    msg: |
+      Repository cloned successfully to: {{ temp_dir_results.path }}
+      Total files found: {{ find_results.files | length }}
+      File list:
+      {{ find_results.files | map(attribute='path') | list | to_nice_yaml }}
+  when: find_results.files is defined and find_results.files | length > 0
 
-# - name: Example download of a single file
-#   ansible.builtin.get_url:
-#     url: https://github.aetna.com/raw/9298520/dpman/DEV/README.md
-#     dest: "{{ temp_dir_results.path }}/README.md"
-#     mode: '0400'
-#     force: yes
-#   register: get_file_results
+- name: Display Empty Repository Message
+  ansible.builtin.debug:
+    msg: "Repository was cloned but no files were found in {{ temp_dir_results.path }}"
+  when: find_results.files is not defined or find_results.files | length == 0
 ...

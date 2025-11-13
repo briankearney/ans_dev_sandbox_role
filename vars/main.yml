@@ -1,4 +1,5 @@
 ---
-# simple variable example (https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#simple-variables)
-ans_dev_sandbox_role_some_variable: "{{ some_variable | default('foo') }}"
+# Role-specific internal variables (these override defaults)
+# Variables defined here should not be overridden by users
+# Consider moving user-configurable items to defaults/main.yml
 ...
