@@ -2,29 +2,24 @@
 galaxy_info:
   author: "Brian Kearney"
   description: "Ansible role providing a development sandbox and demo tasks for testing/CI."
-  company: "briankearney"
+  role_name: ans_dev_sandbox_role
+  namespace: mcindi
+  company: "McIndi Solutions"
   license: "MIT"
   min_ansible_version: "2.9"
   platforms:
     - name: EL
       versions:
-        - 7
-        - 8
-        - 9
+        - all
     - name: Fedora
       versions:
-        - 38
-        - 39
-        - 40
+        - all
     - name: Ubuntu
       versions:
-        - focal
-        - jammy
+        - all
     - name: Debian
       versions:
-        - buster
-        - bullseye
-        - bookworm
+        - all
     - name: GenericLinux
       versions:
         - all
@@ -35,4 +30,3 @@ galaxy_info:
     - "ci"
     - "demo"
 dependencies: []
-...

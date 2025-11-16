@@ -1,10 +1,11 @@
 ---
 # Simple plain text variable
-# Reference: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#simple-variables
+# Reference:
+#  https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#simple-variables
 ans_dev_sandbox_role_some_username: "{{ some_username | default('UserName') }}"
 
 # Sample vault protected variable
-# Reference: https://docs.ansible.com/ansible/latest/vault_guide/vault_encrypting_content.html#encrypting-individual-variables-with-ansible-vault
+# Reference: Ansible Vault docs (encrypting individual variables).
 ans_dev_sandbox_role_some_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   39623765303836663961306533383933386432353630653465663063643738636562646464626162
