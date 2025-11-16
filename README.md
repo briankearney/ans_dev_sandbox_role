@@ -40,7 +40,7 @@ Quick start
    ```bash
    ./ACTIVATE_SANDBOX_ENV.bash
    ```
-3. Run the role from a playbook (create a simple `playbook.yml` that includes this role) or run ad-hoc tasks using `ansible-playbook`.
+3. Run the role from a playbook (use briankearney/ans_dev_sandbox_playbook, which includes this role) or run ad-hoc tasks using `ansible-playbook`.
 
 Variables
 - Defaults live in `defaults/main.yml` and are safe to override.
