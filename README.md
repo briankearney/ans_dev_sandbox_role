@@ -36,7 +36,7 @@ Quick start
    git clone https://github.com/briankearney/ans_dev_sandbox_role.git
    cd ans_dev_sandbox_role
    ```
-2. (Optional) Activate the sandbox environment:
+2. Activate the sandbox environment:
    ```bash
    ./ACTIVATE_SANDBOX_ENV.bash
    ```
