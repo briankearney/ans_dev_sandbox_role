@@ -22,6 +22,8 @@
     state: directory
     mode: '0755'
   when: temp_dir_path != ""
+  register: fixed_dir_results
+  changed_when: fixed_dir_results.diff.before.state is defined and fixed_dir_results.diff.before.state == 'absent'
 
 # Clone git repository using HTTPS
 # Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html
@@ -35,7 +37,7 @@
     GIT_ASKPASS: /bin/true
   register: git_clone_results
   failed_when: git_clone_results.failed
-  changed_when: git_clone_results.changed
+  changed_when: git_clone_results.before is defined and git_clone_results.before != git_clone_results.after
 
 # Recursively find all files in the cloned directory
 # Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/find_module.html
