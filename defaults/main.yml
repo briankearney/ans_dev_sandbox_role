@@ -20,4 +20,8 @@ ans_dev_sandbox_role_some_variable: "{{ some_variable | default('foo') }}"
 # Git repository configuration
 git_repo_url: "https://github.com/briankearney/ans_dev_sandbox_role"
 git_repo_version: "main"
+
+# Temporary directory configuration
+# Set temp_dir_path to a fixed path for idempotent testing, or leave unset to create a new temp directory each time
+temp_dir_path: ""
 ...
