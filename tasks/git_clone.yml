@@ -32,12 +32,16 @@
     repo: "{{ git_repo_url }}"
     dest: "{{ temp_dir_results.path }}/"
     version: "{{ git_repo_version }}"
+    update: true
   environment:
     GIT_TERMINAL_PROMPT: "false"
     GIT_ASKPASS: /bin/true
   register: git_clone_results
   failed_when: git_clone_results.failed
-  changed_when: git_clone_results.before is defined and git_clone_results.before != git_clone_results.after
+  changed_when: >-
+    git_clone_results.before is defined and
+    git_clone_results.after is defined and
+    git_clone_results.before != git_clone_results.after
 
 # Recursively find all files in the cloned directory
 # Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/find_module.html
