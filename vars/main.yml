@@ -2,4 +2,3 @@
 # Role-specific internal variables (these override defaults)
 # Variables defined here should not be overridden by users
 # Consider moving user-configurable items to defaults/main.yml
-...

@@ -5,66 +5,65 @@
   ansible.builtin.tempfile:
     state: directory
     suffix: _ansible_sandbox
-  register: temp_dir_results
-  when: temp_dir_path == ""
-  changed_when: temp_dir_path == ""
+  register: ans_dev_sandbox_role_temp_dir_results
+  when: ans_dev_sandbox_role_temp_dir_path == ""
+  changed_when: ans_dev_sandbox_role_temp_dir_path == ""
 
 - name: Use Fixed Temporary Directory Path
   ansible.builtin.set_fact:
     temp_dir_results:
-      path: "{{ temp_dir_path }}"
-  when: temp_dir_path != ""
+      path: "{{ ans_dev_sandbox_role_temp_dir_path }}"
+  when: ans_dev_sandbox_role_temp_dir_path != ""
   changed_when: false
 
 - name: Ensure Fixed Temporary Directory Exists
   ansible.builtin.file:
-    path: "{{ temp_dir_path }}"
+    path: "{{ ans_dev_sandbox_role_temp_dir_path }}"
     state: directory
     mode: '0755'
-  when: temp_dir_path != ""
-  register: fixed_dir_results
-  changed_when: fixed_dir_results.diff.before.state is defined and fixed_dir_results.diff.before.state == 'absent'
+  when: ans_dev_sandbox_role_temp_dir_path != ""
+  register: ans_dev_sandbox_role_fixed_dir_results
+  changed_when: ans_dev_sandbox_role_fixed_dir_results.diff.before.state is defined and ans_dev_sandbox_role_fixed_dir_results.diff.before.state == 'absent'
 
 # Clone git repository using HTTPS
 # Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html
 - name: Clone GitHub Repository
   ansible.builtin.git:
-    repo: "{{ git_repo_url }}"
-    dest: "{{ temp_dir_results.path }}/"
-    version: "{{ git_repo_version }}"
+    repo: "{{ ans_dev_sandbox_role_git_repo_url }}"
+    dest: "{{ ans_dev_sandbox_role_temp_dir_results.path }}/"
+    version: "{{ ans_dev_sandbox_role_git_repo_version }}"
     update: true
   environment:
     GIT_TERMINAL_PROMPT: "false"
     GIT_ASKPASS: /bin/true
-  register: git_clone_results
-  failed_when: git_clone_results.failed
+  register: ans_dev_sandbox_role_git_clone_results
+  failed_when: ans_dev_sandbox_role_git_clone_results.failed
   changed_when: >-
-    git_clone_results.before is defined and
-    git_clone_results.after is defined and
-    git_clone_results.before != git_clone_results.after
+    ans_dev_sandbox_role_git_clone_results.before is defined and
+    ans_dev_sandbox_role_git_clone_results.after is defined and
+    ans_dev_sandbox_role_git_clone_results.before != ans_dev_sandbox_role_git_clone_results.after
 
 # Recursively find all files in the cloned directory
 # Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/find_module.html
 - name: List Cloned Files
   ansible.builtin.find:
-    paths: "{{ temp_dir_results.path }}"
+    paths: "{{ ans_dev_sandbox_role_temp_dir_results.path }}"
     recurse: true
-  register: find_results
-  when: not git_clone_results.failed
+  register: ans_dev_sandbox_role_find_results
+  when: not ans_dev_sandbox_role_git_clone_results.failed
 
 # Display the fully qualified file names in the cloned directory
 # Reference: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
 - name: Display Files Found in Repository
   ansible.builtin.debug:
     msg: |
-      Repository cloned successfully to: {{ temp_dir_results.path }}
-      Total files found: {{ find_results.files | length }}
+      Repository cloned successfully to: {{ ans_dev_sandbox_role_temp_dir_results.path }}
+      Total files found: {{ ans_dev_sandbox_role_find_results.files | length }}
       File list:
-      {{ find_results.files | map(attribute='path') | list | to_nice_yaml }}
-  when: find_results.files is defined and find_results.files | length > 0
+      {{ ans_dev_sandbox_role_find_results.files | map(attribute='path') | list | to_nice_yaml }}
+  when: ans_dev_sandbox_role_find_results.files is defined and ans_dev_sandbox_role_find_results.files | length > 0
 
 - name: Display Empty Repository Message
   ansible.builtin.debug:
-    msg: "Repository was cloned but no files were found in {{ temp_dir_results.path }}"
-  when: find_results.files is not defined or find_results.files | length == 0
-...
+    msg: "Repository was cloned but no files were found in {{ ans_dev_sandbox_role_temp_dir_results.path }}"
+  when: ans_dev_sandbox_role_find_results.files is not defined or ans_dev_sandbox_role_find_results.files | length == 0

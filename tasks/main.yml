@@ -4,4 +4,3 @@
 - name: Include Clone Task
   ansible.builtin.include_tasks:
     file: git_clone.yml
-...
