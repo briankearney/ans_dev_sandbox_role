@@ -1,3 +1,15 @@
+.venv/
+ansible.log
+vault-pw.txt
+.molecule/
+molecule/.cache/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
 **/.DS_Store
 **/ansible.log
 **/vault-pw.txt

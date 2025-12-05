@@ -1,0 +1,8 @@
+ansible-core>=2.19
+molecule>=25
+molecule-plugins>=23
+pytest
+pytest-testinfra
+ansible-lint
+yamllint
+pygments

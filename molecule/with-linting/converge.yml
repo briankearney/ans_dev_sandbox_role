@@ -1,0 +1,6 @@
+---
+- name: Converge (with-linting)
+  hosts: all
+  gather_facts: true
+  roles:
+    - role: ans_dev_sandbox_role

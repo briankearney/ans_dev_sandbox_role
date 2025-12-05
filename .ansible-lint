@@ -1,0 +1,10 @@
+---
+profile: production
+exclude_paths:
+  - .venv/
+  - .molecule/
+  - molecule/.cache/
+  - __pycache__/
+  - molecule/
+skip_list:
+  - galaxy

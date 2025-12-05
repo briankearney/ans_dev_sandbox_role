@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  roles:
+    - role: ans_dev_sandbox_role
+      vars:
+        ans_dev_sandbox_role_git_repo_url: "https://github.com/briankearney/ans_dev_sandbox_role"
+        ans_dev_sandbox_role_git_repo_version: "main"
+        ans_dev_sandbox_role_temp_dir_path: "/tmp/molecule_test_sandbox"
